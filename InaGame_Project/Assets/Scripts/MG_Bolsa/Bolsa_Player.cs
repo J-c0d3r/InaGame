@@ -1,0 +1,73 @@
+using System.Collections;
+using System.Collections.Generic;
+using System.Linq;
+using UnityEngine;
+
+public class Bolsa_Player : MonoBehaviour
+{
+
+    private bool isJumping;
+    [SerializeField] private float speed;
+    [SerializeField] private float jumpForce;
+    private Vector2 movement;
+    
+
+    [SerializeField] private Animator anim;
+    [SerializeField] private Rigidbody2D rig;
+
+
+    void Start()
+    {
+        anim = GetComponentInChildren<Animator>();
+        rig = GetComponent<Rigidbody2D>();  
+    }
+
+
+    private void FixedUpdate()
+    {
+        rig.velocity = movement * speed * Time.fixedDeltaTime;        
+    }
+
+    void Update()
+    {
+        Move();
+    }
+
+    private void Move()
+    {
+        movement.x = Input.GetAxis("Horizontal");
+
+
+        if (movement.x > 0)
+            transform.eulerAngles = new Vector3(0, 0,0);
+        
+        if(movement.x < 0)
+            transform.eulerAngles = new Vector3(0, 180,0);
+
+
+        if (movement == Vector2.zero && !isJumping)
+        {
+            anim.SetInteger("transition", 0); //idle
+        }
+        else if (!isJumping)
+        {
+            anim.SetInteger("transition", 1); //run
+        }
+
+
+        if (Input.GetButtonDown("Jump")) {             
+            anim.SetInteger("transition", 2); //jump
+            //rig.velocity = new Vector2(rig.velocity.x, jumpForce);
+            rig.AddForce(Vector2.up * jumpForce, ForceMode2D.Impulse);
+            isJumping = true;
+        }
+    }
+
+    private void OnTriggerEnter2D(Collider2D collision)
+    {
+        if(collision.gameObject.layer == 6)
+        {
+            isJumping = false;
+        }
+    }
+}
