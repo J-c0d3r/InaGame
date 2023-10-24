@@ -10,27 +10,34 @@ public class Bolsa_Player : MonoBehaviour
     [SerializeField] private float speed;
     [SerializeField] private float jumpForce;
     private Vector2 movement;
-    
+
 
     [SerializeField] private Animator anim;
+    [SerializeField] private SpriteRenderer spriteR;
     [SerializeField] private Rigidbody2D rig;
+    //[SerializeField] private CapsuleCollider2D cap2d;
+    //[SerializeField] private BoxCollider2D box2d;
 
 
     void Start()
     {
         anim = GetComponentInChildren<Animator>();
-        rig = GetComponent<Rigidbody2D>();  
+        spriteR = GetComponentInChildren<SpriteRenderer>();
+        rig = GetComponent<Rigidbody2D>();
+        //cap2d = GetComponent<CapsuleCollider2D>();
+        //box2d = GetComponent<BoxCollider2D>();
     }
 
 
     private void FixedUpdate()
     {
-        rig.velocity = movement * speed * Time.fixedDeltaTime;        
+        rig.velocity = new Vector2(movement.x * speed * Time.fixedDeltaTime, rig.velocity.y);
     }
 
     void Update()
     {
         Move();
+        Jump();
     }
 
     private void Move()
@@ -39,10 +46,10 @@ public class Bolsa_Player : MonoBehaviour
 
 
         if (movement.x > 0)
-            transform.eulerAngles = new Vector3(0, 0,0);
-        
-        if(movement.x < 0)
-            transform.eulerAngles = new Vector3(0, 180,0);
+            spriteR.flipX = false;
+
+        if (movement.x < 0)
+            spriteR.flipX = true;
 
 
         if (movement == Vector2.zero && !isJumping)
@@ -53,19 +60,22 @@ public class Bolsa_Player : MonoBehaviour
         {
             anim.SetInteger("transition", 1); //run
         }
+    }
 
-
-        if (Input.GetButtonDown("Jump")) {             
+    private void Jump()
+    {
+        if (Input.GetButtonDown("Jump"))
+        {
             anim.SetInteger("transition", 2); //jump
-            //rig.velocity = new Vector2(rig.velocity.x, jumpForce);
-            rig.AddForce(Vector2.up * jumpForce, ForceMode2D.Impulse);
+            rig.velocity = new Vector2(rig.velocity.x, jumpForce);
+            //rig.AddForce(Vector2.up * jumpForce, ForceMode2D.Impulse);
             isJumping = true;
         }
     }
 
     private void OnTriggerEnter2D(Collider2D collision)
     {
-        if(collision.gameObject.layer == 6)
+        if (collision.gameObject.layer == 6)
         {
             isJumping = false;
         }
