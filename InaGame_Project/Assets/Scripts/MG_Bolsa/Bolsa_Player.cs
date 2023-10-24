@@ -7,6 +7,8 @@ public class Bolsa_Player : MonoBehaviour
 {
 
     private bool isJumping;
+    private bool isDoubleJumping;
+    private bool canDoubleJump;
     [SerializeField] private float speed;
     [SerializeField] private float jumpForce;
     private Vector2 movement;
@@ -26,6 +28,8 @@ public class Bolsa_Player : MonoBehaviour
         rig = GetComponent<Rigidbody2D>();
         //cap2d = GetComponent<CapsuleCollider2D>();
         //box2d = GetComponent<BoxCollider2D>();
+
+        //canDoubleJump = true;
     }
 
 
@@ -66,10 +70,18 @@ public class Bolsa_Player : MonoBehaviour
     {
         if (Input.GetButtonDown("Jump"))
         {
-            anim.SetInteger("transition", 2); //jump
-            rig.velocity = new Vector2(rig.velocity.x, jumpForce);
-            //rig.AddForce(Vector2.up * jumpForce, ForceMode2D.Impulse);
-            isJumping = true;
+            if (!isJumping) // first jump
+            {
+                anim.SetInteger("transition", 2); //jump
+                rig.velocity = new Vector2(rig.velocity.x, jumpForce);
+                //rig.AddForce(Vector2.up * jumpForce, ForceMode2D.Impulse);
+                isJumping = true;
+            }
+            else if(isJumping && !isDoubleJumping && canDoubleJump) // second jump
+            {
+                rig.velocity = new Vector2(rig.velocity.x, jumpForce);
+                isDoubleJumping = true;
+            }
         }
     }
 
@@ -78,6 +90,7 @@ public class Bolsa_Player : MonoBehaviour
         if (collision.gameObject.layer == 6)
         {
             isJumping = false;
+            isDoubleJumping = false;
         }
     }
 }
