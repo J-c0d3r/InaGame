@@ -33,15 +33,14 @@ public class Bolsa_GameManager : MonoBehaviour
 
         qtyCurrentDoc = 0;
         qtyCurrentGoldenDoc = 0;
+        Time.timeScale = 0;
     }
 
     public void StartGame()
     {
         inicialScreen.SetActive(false);
+        Time.timeScale = 1;
     }
-
-
-
 
     
     public void AddQtyCurrentDoc()
