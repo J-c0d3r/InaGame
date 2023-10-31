@@ -5,10 +5,11 @@ using UnityEngine;
 
 public class Bolsa_Player : MonoBehaviour
 {
+    public bool controlsEnabled;
 
     private bool isJumping;
     private bool isDoubleJumping;
-    private bool canDoubleJump;
+    public bool canDoubleJump;
     [SerializeField] private float speed;
     [SerializeField] private float jumpForce;
     private Vector2 movement;
@@ -40,8 +41,16 @@ public class Bolsa_Player : MonoBehaviour
 
     void Update()
     {
-        Move();
-        Jump();
+        if (controlsEnabled)
+        {
+            Move();
+            Jump();
+        }
+        else
+        {
+            movement.x = 0;
+            anim.SetInteger("transition", 0); //idle
+        }
     }
 
     private void Move()

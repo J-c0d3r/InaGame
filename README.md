@@ -3,11 +3,18 @@
 <details>
     <summary><strong><font size = "5">Versions</font></strong></summary>
 
+    0️⃣v0.0.1.5
+    ✔️DoubleJump has been implemented
+    🚧Colecionáveis em cada posição
+    🚧Tela Win
+    
+
     0️⃣v0.0.1.4
     ✔️UI: Vida do player
     ✔️Cinemachine has implemented and player has your own camera
     ♻️Hierarchy organization with a separation pattern
     🚧Inicial Screen: imgs has been implemented
+
 
     0️⃣v0.0.1.3
     ✔️Player mechanics
@@ -19,12 +26,15 @@
     0️⃣v0.0.1.2
     🚧Sketch of the scenario
 
+
     0️⃣v0.0.1.1
     🐛Fixed jump
+
 
     0️⃣v0.0.1.0
     🚧Level Part1
     🚧Player
+
 
     0️⃣v0.0.0.0
     ✔️Project created - 2022.3.11f
@@ -67,7 +77,7 @@
   - [x] Documento dourado implementado
   - [ ] Colocados em suas posições
 - [ ] Checkpoints funcionais
-  - [ ] Desbloqueador do Double Jump no 1º Checkpoint
+  - [x] Desbloqueador do Double Jump no 2º Checkpoint
 
 ##### Screens
 
