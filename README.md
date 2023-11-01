@@ -3,6 +3,15 @@
 <details>
     <summary><strong><font size = "5">Versions</font></strong></summary>
 
+    0️⃣v0.0.1.6
+    ✔️Game Over Screen has been implemented    
+    ✔️Tela inicial com as instruções
+    🐛Capsule Collider Player Fixed
+    🚧Checkpoints funcionais
+    🔥Mecânica que por onde passa destroí a fase
+    🐛🔥There is a bug at spawn system. NullReference.
+
+
     0️⃣v0.0.1.5
     ✔️DoubleJump has been implemented
     🚧Colecionáveis em cada posição
@@ -60,8 +69,7 @@
 
 ##### Enemies
 
-- [ ] Inimigo destruir da fase
-- [ ] Mecânica que por onde passa destroí a fase
+- [x] Inimigo seguindo player
 
 ##### UI
 
@@ -81,8 +89,8 @@
 
 ##### Screens
 
-- [ ] Tela inicial com as instruções
-- [ ] Game Over
+- [x] Tela inicial com as instruções
+- [x] Game Over
 - [ ] Vitória
 
 ##### Audios
@@ -90,7 +98,7 @@
 - [ ] Música de fundo
 - [ ] SFX documento coletado
 - [ ] SFX documento dourado coletado
-- [ ] SFX player sofre dano
+- [ ] SFX player sofre dano 
 - [ ] SFX inimigo destruindo o cenário
 - [ ] Pulo do player
 - [ ] Jogo concluído

@@ -58,11 +58,11 @@ public class Bolsa_Player : MonoBehaviour
         movement.x = Input.GetAxis("Horizontal");
 
 
-        if (movement.x > 0)
-            spriteR.flipX = false;
+        if (movement.x > 0)            
+            transform.rotation = Quaternion.Euler(0, 0, 0);
 
-        if (movement.x < 0)
-            spriteR.flipX = true;
+        if (movement.x < 0)            
+            transform.rotation = Quaternion.Euler(0, 180, 0);
 
 
         if (movement == Vector2.zero && !isJumping)

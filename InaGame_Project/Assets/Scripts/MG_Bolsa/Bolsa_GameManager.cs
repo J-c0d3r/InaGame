@@ -13,9 +13,10 @@ public class Bolsa_GameManager : MonoBehaviour
     private int qtyCurrentDoc;
     private int qtyCurrentGoldenDoc;
     private int currentSpawnPoint;
+    private int qtyLifePlayer;
 
     [SerializeField] private GameObject inicialScreen;
-    //[SerializeField] private GameObject gameOverScreen;
+    [SerializeField] private GameObject gameOverScreen;
     [SerializeField] private GameObject winScreen;
     [SerializeField] private TextMeshProUGUI qtyDoc_txt;
     [SerializeField] private TextMeshProUGUI qtyDocWinScreen_txt;
@@ -26,6 +27,9 @@ public class Bolsa_GameManager : MonoBehaviour
     [SerializeField] private TextMeshProUGUI adver_txt;
 
     [SerializeField] private List<GameObject> spawnPointsList = new List<GameObject>();
+    [SerializeField] private List<GameObject> lifePlayerList = new List<GameObject>();
+
+    private Transform enemyPos;
 
     Bolsa_Player player;
     
@@ -37,12 +41,14 @@ public class Bolsa_GameManager : MonoBehaviour
     void Start()
     {
         inicialScreen.SetActive(true);
-        //gameOverScreen.SetActive(false);
+        gameOverScreen.SetActive(false);
         winScreen.SetActive(false);
 
         currentSpawnPoint = 0;
         qtyCurrentDoc = 0;
         qtyCurrentGoldenDoc = 0;
+        qtyLifePlayer = 3;
+        lifePlayerList[3].SetActive(true);
         Time.timeScale = 0;
 
         player = GameObject.FindGameObjectWithTag("Player").GetComponent<Bolsa_Player>();
@@ -84,7 +90,13 @@ public class Bolsa_GameManager : MonoBehaviour
 
     public void BackMenu()
     {
-        //SceneManager.LoadScene();
+        SceneManager.LoadScene(1);
+    }
+
+    public void GameOver()
+    {
+        Time.timeScale = 0;
+        gameOverScreen.SetActive(true);
     }
 
     
@@ -99,15 +111,37 @@ public class Bolsa_GameManager : MonoBehaviour
         qtyCurrentGoldenDoc++;
         qtyGoldenDoc_txt.text = qtyCurrentGoldenDoc.ToString() + " / 10";
     }
-
+        
     public void SpawnsController(string spawnName)
     {
         currentSpawnPoint++;
+        enemyPos.position = GameObject.FindGameObjectWithTag("enemy").transform.position;
         
         if (spawnName == "Spawn2_PUp")
         {
             player.canDoubleJump = true;            
         }
+    }
+
+    public void RespawnByDeath()
+    {
+        for (int i = 0; i < lifePlayerList.Count; i++)
+        {
+            lifePlayerList[i].SetActive(false);
+        }
+
+        qtyLifePlayer--;
+        lifePlayerList[qtyLifePlayer].SetActive(true);
+
+        if(qtyLifePlayer <= 0)
+        {
+            GameOver();
+            return;
+        }
+
+        player.transform.position = spawnPointsList[currentSpawnPoint].transform.position;
+        GameObject.FindGameObjectWithTag("Enemy").transform.position = enemyPos.position;
+
     }
 
 }
