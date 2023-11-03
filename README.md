@@ -3,6 +3,14 @@
 <details>
     <summary><strong><font size = "5">Versions</font></strong></summary>
 
+    0️⃣v0.0.1.7
+    ✔️Portal has been done
+    ✔️Sign implemented
+    ✔️Warning implemented
+    🐛🔥Bug: Document are collected twice
+    🐛🔥There is a bug at spawn system. NullReference enemy.
+
+
     0️⃣v0.0.1.6
     ✔️Game Over Screen has been implemented    
     ✔️Tela inicial com as instruções

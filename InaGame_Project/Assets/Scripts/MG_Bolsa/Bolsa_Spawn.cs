@@ -10,8 +10,9 @@ public class Bolsa_Spawn : MonoBehaviour
     {
         if (collision.CompareTag("Player"))
         {
-            Debug.Log(gameObject.name);
+            //Debug.Log(gameObject.name);
             Bolsa_GameManager.instance.SpawnsController(gameObject.name);
+            gameObject.SetActive(false);
         }
     }
 

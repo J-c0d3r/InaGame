@@ -32,6 +32,7 @@ public class Bolsa_GameManager : MonoBehaviour
     private Transform enemyPos;
 
     Bolsa_Player player;
+    //[SerializeField] public GameObject enemy;
     
     private void Awake()
     {
@@ -44,7 +45,7 @@ public class Bolsa_GameManager : MonoBehaviour
         gameOverScreen.SetActive(false);
         winScreen.SetActive(false);
 
-        currentSpawnPoint = 0;
+        currentSpawnPoint = -1;
         qtyCurrentDoc = 0;
         qtyCurrentGoldenDoc = 0;
         qtyLifePlayer = 3;
@@ -52,7 +53,7 @@ public class Bolsa_GameManager : MonoBehaviour
         Time.timeScale = 0;
 
         player = GameObject.FindGameObjectWithTag("Player").GetComponent<Bolsa_Player>();
-        player.transform.position = spawnPointsList[0].transform.position;
+        player.transform.position = spawnPointsList[0].transform.position;        
     }
 
     public void StartGame()
@@ -64,6 +65,7 @@ public class Bolsa_GameManager : MonoBehaviour
 
     public void VictoryGame()
     {
+        //enemy STOP
         player.controlsEnabled = false;
         winScreen.SetActive(true);
         qtyDocWinScreen_txt.text = qtyCurrentDoc.ToString() + " / 20";
@@ -115,7 +117,7 @@ public class Bolsa_GameManager : MonoBehaviour
     public void SpawnsController(string spawnName)
     {
         currentSpawnPoint++;
-        enemyPos.position = GameObject.FindGameObjectWithTag("enemy").transform.position;
+        //enemyPos.position = enemy.transform.position;
         
         if (spawnName == "Spawn2_PUp")
         {
@@ -125,6 +127,9 @@ public class Bolsa_GameManager : MonoBehaviour
 
     public void RespawnByDeath()
     {
+        player.transform.position = spawnPointsList[currentSpawnPoint].transform.position;
+        //enemy.transform.position = enemyPos.position;
+
         for (int i = 0; i < lifePlayerList.Count; i++)
         {
             lifePlayerList[i].SetActive(false);
@@ -139,8 +144,8 @@ public class Bolsa_GameManager : MonoBehaviour
             return;
         }
 
-        player.transform.position = spawnPointsList[currentSpawnPoint].transform.position;
-        GameObject.FindGameObjectWithTag("Enemy").transform.position = enemyPos.position;
+        Debug.Log(currentSpawnPoint);
+
 
     }
 
