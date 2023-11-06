@@ -17,11 +17,13 @@ public class Bolsa_GameManager : MonoBehaviour
 
     [SerializeField] private GameObject inicialScreen;
     [SerializeField] private GameObject gameOverScreen;
-    [SerializeField] private GameObject winScreen;
+    [SerializeField] private GameObject finalScreen;
     [SerializeField] private TextMeshProUGUI qtyDoc_txt;
     [SerializeField] private TextMeshProUGUI qtyDocWinScreen_txt;
     [SerializeField] private TextMeshProUGUI qtyGoldenDoc_txt;
     [SerializeField] private TextMeshProUGUI qtyGoldenDocWinScreen_txt;
+    [SerializeField] private GameObject finalMsgGood_txt;
+    [SerializeField] private GameObject finalMsgBad_txt;
     [SerializeField] private TextMeshProUGUI percBolsa_txt;
     [SerializeField] private TextMeshProUGUI xp_txt;
     [SerializeField] private TextMeshProUGUI adver_txt;
@@ -29,11 +31,10 @@ public class Bolsa_GameManager : MonoBehaviour
     [SerializeField] private List<GameObject> spawnPointsList = new List<GameObject>();
     [SerializeField] private List<GameObject> lifePlayerList = new List<GameObject>();
 
-    private Transform enemyPos;
+    public Bolsa_Player player;
+    public GameObject enemy;
+    public Vector2 enemyPos;
 
-    Bolsa_Player player;
-    //[SerializeField] public GameObject enemy;
-    
     private void Awake()
     {
         instance = this;
@@ -43,7 +44,7 @@ public class Bolsa_GameManager : MonoBehaviour
     {
         inicialScreen.SetActive(true);
         gameOverScreen.SetActive(false);
-        winScreen.SetActive(false);
+        finalScreen.SetActive(false);
 
         currentSpawnPoint = -1;
         qtyCurrentDoc = 0;
@@ -53,7 +54,7 @@ public class Bolsa_GameManager : MonoBehaviour
         Time.timeScale = 0;
 
         player = GameObject.FindGameObjectWithTag("Player").GetComponent<Bolsa_Player>();
-        player.transform.position = spawnPointsList[0].transform.position;        
+        player.transform.position = spawnPointsList[0].transform.position;
     }
 
     public void StartGame()
@@ -65,21 +66,27 @@ public class Bolsa_GameManager : MonoBehaviour
 
     public void VictoryGame()
     {
-        //enemy STOP
+        if (enemy.GetComponent<Bolsa_Enemy>() != null)
+            enemy.GetComponent<Bolsa_Enemy>().SetSpeed(0);
         player.controlsEnabled = false;
-        winScreen.SetActive(true);
+        finalScreen.SetActive(true);
         qtyDocWinScreen_txt.text = qtyCurrentDoc.ToString() + " / 20";
         qtyGoldenDocWinScreen_txt.text = qtyCurrentGoldenDoc.ToString() + " / 10";
         //percBolsa_txt.text = "Porcentagem de Bolsa: " + ((float)qtyCurrentGoldenDoc / (float)qtyTotalGoldenDoc*100.00).ToString() + "%";
         xp_txt.text = "XP: 100";
 
-        if(qtyCurrentDoc == qtyTotalDoc)
+        finalMsgGood_txt.SetActive(false);
+        finalMsgBad_txt.SetActive(false);
+
+        if (qtyCurrentDoc == qtyTotalDoc)
         {
+            finalMsgGood_txt.SetActive(true);
             percBolsa_txt.text = "Porcentagem de Bolsa: " + ((float)qtyCurrentGoldenDoc / (float)qtyTotalGoldenDoc * 100.00).ToString() + "%";
             adver_txt.text = "Como é bom receber uma bolsa, não é mesmo?!Aqui no Inatel também oferecemos bolsas de estudos de 20 % a 100 % para nossos alunos, venha e confira;)";
         }
         else
         {
+            finalMsgBad_txt.SetActive(true);
             percBolsa_txt.text = "Porcentagem de Bolsa: 0%";
             adver_txt.text = "Oh não :( Você não conseguiu coletar todos os documentos necessários, mas não se preocupa pois você poderá tentar novamente! Aqui no Inatel oferecemos também oferecemos bolsa de estudos, venha e confira ;)";
         }
@@ -97,11 +104,11 @@ public class Bolsa_GameManager : MonoBehaviour
 
     public void GameOver()
     {
-        Time.timeScale = 0;
+        //Time.timeScale = 0;
         gameOverScreen.SetActive(true);
     }
 
-    
+
     public void AddQtyCurrentDoc()
     {
         qtyCurrentDoc++;
@@ -113,22 +120,23 @@ public class Bolsa_GameManager : MonoBehaviour
         qtyCurrentGoldenDoc++;
         qtyGoldenDoc_txt.text = qtyCurrentGoldenDoc.ToString() + " / 10";
     }
-        
+
     public void SpawnsController(string spawnName)
     {
         currentSpawnPoint++;
-        //enemyPos.position = enemy.transform.position;
-        
+
+        enemyPos = new Vector2(enemy.transform.position.x, enemy.transform.position.y);
+
         if (spawnName == "Spawn2_PUp")
         {
-            player.canDoubleJump = true;            
+            player.canDoubleJump = true;
         }
     }
 
     public void RespawnByDeath()
     {
         player.transform.position = spawnPointsList[currentSpawnPoint].transform.position;
-        //enemy.transform.position = enemyPos.position;
+        enemy.transform.position = enemyPos;
 
         for (int i = 0; i < lifePlayerList.Count; i++)
         {
@@ -138,15 +146,19 @@ public class Bolsa_GameManager : MonoBehaviour
         qtyLifePlayer--;
         lifePlayerList[qtyLifePlayer].SetActive(true);
 
-        if(qtyLifePlayer <= 0)
+        if (qtyLifePlayer <= 0)
         {
-            GameOver();
-            return;
+            StartCoroutine(DiePlayer());
         }
+    }
 
-        Debug.Log(currentSpawnPoint);
-
-
+    public IEnumerator DiePlayer()
+    {
+        if (enemy.GetComponent<Bolsa_Enemy>() != null)
+            enemy.GetComponent<Bolsa_Enemy>().SetSpeed(0);
+        player.GetComponent<Bolsa_Player>().PlayerDie();
+        yield return new WaitForSeconds(1f);
+        GameOver();
     }
 
 }

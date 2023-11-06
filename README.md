@@ -3,6 +3,21 @@
 <details>
     <summary><strong><font size = "5">Versions</font></strong></summary>
 
+    0️⃣v0.0.1.8
+    ✔️Sprite Double Jump
+    ✔️Sprite CheckPoint
+    ✔️Spikes cause damage
+    ✔️Death player animation
+    ✔️Enemy attack animation
+    🛠️Enemy orientation fixed according to player direction
+    🛠️Final screen, main text fixed
+    🛠️Enemy stop when game is finished
+    🚧Scenario drawned: TileMap
+    🔥Removed: Time.timescale = 0;
+    🐛Bug Solved: Document are collected twice
+    🐛Bug Solved: There is a bug at spawn system. NullReference enemy.
+
+
     0️⃣v0.0.1.7
     ✔️Portal has been done
     ✔️Sign implemented
@@ -92,7 +107,7 @@
   - [x] Documento implementado
   - [x] Documento dourado implementado
   - [ ] Colocados em suas posições
-- [ ] Checkpoints funcionais
+- [x] Checkpoints funcionais
   - [x] Desbloqueador do Double Jump no 2º Checkpoint
 
 ##### Screens

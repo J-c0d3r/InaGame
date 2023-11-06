@@ -8,6 +8,7 @@ public class Bolsa_Player : MonoBehaviour
     public bool controlsEnabled;
 
     private bool isJumping;
+    private bool isAlive;
     private bool isDoubleJumping;
     public bool canDoubleJump;
     [SerializeField] private float speed;
@@ -46,10 +47,14 @@ public class Bolsa_Player : MonoBehaviour
             Move();
             Jump();
         }
-        else
+        else if (isAlive)
         {
             movement.x = 0;
             anim.SetInteger("transition", 0); //idle
+        }
+        else
+        {
+            movement.x = 0;
         }
     }
 
@@ -58,10 +63,10 @@ public class Bolsa_Player : MonoBehaviour
         movement.x = Input.GetAxis("Horizontal");
 
 
-        if (movement.x > 0)            
+        if (movement.x > 0)
             transform.rotation = Quaternion.Euler(0, 0, 0);
 
-        if (movement.x < 0)            
+        if (movement.x < 0)
             transform.rotation = Quaternion.Euler(0, 180, 0);
 
 
@@ -86,7 +91,7 @@ public class Bolsa_Player : MonoBehaviour
                 //rig.AddForce(Vector2.up * jumpForce, ForceMode2D.Impulse);
                 isJumping = true;
             }
-            else if(isJumping && !isDoubleJumping && canDoubleJump) // second jump
+            else if (isJumping && !isDoubleJumping && canDoubleJump) // second jump
             {
                 rig.velocity = new Vector2(rig.velocity.x, jumpForce);
                 isDoubleJumping = true;
@@ -94,7 +99,14 @@ public class Bolsa_Player : MonoBehaviour
         }
     }
 
-    private void OnTriggerEnter2D(Collider2D collision)
+    public void PlayerDie()
+    {
+        isAlive = false;
+        controlsEnabled = false;
+        anim.SetInteger("transition", -1);
+    }
+
+    private void OnCollisionEnter2D(Collision2D collision)
     {
         if (collision.gameObject.layer == 6)
         {

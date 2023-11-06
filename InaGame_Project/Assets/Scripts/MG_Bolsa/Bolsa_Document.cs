@@ -19,8 +19,7 @@ public class Bolsa_Document : MonoBehaviour
     {
         if (collision.CompareTag("Player"))
         {
-            boxColl.enabled = false;
-            Debug.Log("PAASSSEEEIIII");
+            boxColl.enabled = false;            
 
             if (normalDocument)
             {
