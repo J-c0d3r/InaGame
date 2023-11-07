@@ -3,6 +3,11 @@
 <details>
     <summary><strong><font size = "5">Versions</font></strong></summary>
 
+    0️⃣v0.0.1.9
+    ✔️Scenario drawned: TileMap
+    ♻️Death areas changed to death spikes
+
+
     0️⃣v0.0.1.8
     ✔️Sprite Double Jump
     ✔️Sprite CheckPoint
