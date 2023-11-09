@@ -1,10 +1,14 @@
 using System.Collections;
 using System.Collections.Generic;
+using TMPro;
 using UnityEngine;
 
 public class GameManagerGeneral : MonoBehaviour
 {
     public static GameManagerGeneral instance;
+
+    private float xp_player;
+
 
     private void Awake()
     {
@@ -15,22 +19,20 @@ public class GameManagerGeneral : MonoBehaviour
         }
         else
         {
-            Destroy(this);
+            Destroy(gameObject);
         }
     }
 
-    public void UnlockAchievementAlotPaper()
+    private void Start()
     {
 
     }
 
-    public void UnlockAchievementPendentDocumentation()
+    public void SetXPPlayer(float xp)
     {
-
+        xp_player = PlayerPrefs.GetFloat("XP");
+        xp_player += xp;
+        PlayerPrefs.SetFloat("XP", xp_player);
     }
 
-    public void UnlockAchievementSalesMasterFinatel()
-    {
-
-    }
 }

@@ -3,6 +3,14 @@
 <details>
     <summary><strong><font size = "5">Versions</font></strong></summary>
 
+    0️⃣v0.0.1.11
+    ✔️XP Calculus in progress
+    ✔️XP salved between scenes
+    ✔️Little feature: check icon when Docs Race is completed
+    ✔️Achievements Unlocker System
+    🚧Game balance in progress
+
+
     0️⃣v0.0.1.10
     ✔️Audio has been implemented
     ✔️Menu scene done

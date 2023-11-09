@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using TMPro;
@@ -8,9 +9,6 @@ public class Bolsa_GameManager : MonoBehaviour
 {
     public static Bolsa_GameManager instance;
 
-    //[SerializeField] private float speedEnemyPart1;
-    //[SerializeField] private float speedEnemyPart2;
-    //[SerializeField] private float speedEnemyPart3;
     [SerializeField] private float[] ArraySpeedEnemy;
     [SerializeField] private int qtyTotalDoc;
     [SerializeField] private int qtyTotalGoldenDoc;
@@ -18,7 +16,9 @@ public class Bolsa_GameManager : MonoBehaviour
     private int qtyCurrentGoldenDoc;
     private int currentSpawnPoint;
     private int qtyLifePlayer;
+    private int qtyTotalLifePlayer;
     private float seconds;
+    private float xp;
     private int minutes;
     private bool gameRunning;
 
@@ -64,7 +64,8 @@ public class Bolsa_GameManager : MonoBehaviour
         currentSpawnPoint = -1;
         qtyCurrentDoc = 0;
         qtyCurrentGoldenDoc = 0;
-        qtyLifePlayer = 3;
+        qtyTotalLifePlayer = 3;
+        qtyLifePlayer = qtyTotalLifePlayer;
         lifePlayerList[3].SetActive(true);
         Time.timeScale = 0;
         gameRunning = false;
@@ -113,10 +114,11 @@ public class Bolsa_GameManager : MonoBehaviour
         finalScreen.SetActive(true);
         qtyDocWinScreen_txt.text = qtyCurrentDoc.ToString() + " / 20";
         qtyGoldenDocWinScreen_txt.text = qtyCurrentGoldenDoc.ToString() + " / 10";
-        //percBolsa_txt.text = "Porcentagem de Bolsa: " + ((float)qtyCurrentGoldenDoc / (float)qtyTotalGoldenDoc*100.00).ToString() + "%";
-        xp_txt.text = "XP: 100";
         finalTime_txt.text = minutes.ToString("00") + ":" + seconds.ToString("00");
 
+        xp = (int)((50 + qtyCurrentDoc + 4 * qtyCurrentGoldenDoc) * (120 / ((minutes * 60) + seconds)));
+        xp_txt.text = "XP: " + ((int)xp).ToString();
+        GameManagerGeneral.instance.SetXPPlayer(xp);
 
         finalMsgGood_txt.SetActive(false);
         finalMsgBad_txt.SetActive(false);
@@ -127,6 +129,7 @@ public class Bolsa_GameManager : MonoBehaviour
             percBolsa_txt.text = "Porcentagem de Bolsa: " + ((float)qtyCurrentGoldenDoc / (float)qtyTotalGoldenDoc * 100.00).ToString() + "%";
             adver_txt.text = "Como é bom receber uma bolsa, não é mesmo?!Aqui no Inatel também oferecemos bolsas de estudos de 20 % a 100 % para nossos alunos, venha e confira;)";
             Bolsa_AudioManager.audioManager.PlaySong(songVictory, false);
+            PlayerPrefs.SetInt("Corrida dos Documentos", 1);
         }
         else
         {
@@ -134,6 +137,26 @@ public class Bolsa_GameManager : MonoBehaviour
             percBolsa_txt.text = "Porcentagem de Bolsa: 0%";
             adver_txt.text = "Oh não :( Você não conseguiu coletar todos os documentos necessários, mas não se preocupa pois você poderá tentar novamente! Aqui no Inatel oferecemos também oferecemos bolsa de estudos, venha e confira ;)";
             Bolsa_AudioManager.audioManager.PlaySong(songGameOver, false);
+        }
+
+        CheckAchievements();
+    }
+
+    private void CheckAchievements()
+    {
+        if (qtyCurrentDoc == qtyTotalDoc)
+        {
+            PlayerPrefs.SetInt("Muita Papelada...", 1);
+        }
+
+        if (qtyCurrentDoc == qtyTotalDoc - 1 && qtyCurrentGoldenDoc >= 5)
+        {
+            PlayerPrefs.SetInt("Documentacao Pendente...", 1);
+        }
+
+        if (qtyCurrentDoc == qtyTotalDoc && qtyCurrentGoldenDoc == qtyTotalGoldenDoc && qtyLifePlayer == qtyTotalLifePlayer && ((minutes * 60) + seconds) < 120)
+        {
+            PlayerPrefs.SetInt("Mestre dos Descontos FINATEL", 1);
         }
     }
 
