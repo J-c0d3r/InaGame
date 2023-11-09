@@ -7,11 +7,13 @@ public class Bolsa_Document : MonoBehaviour
 
     [SerializeField] private bool normalDocument;
 
-    private BoxCollider2D boxColl;
+    public AudioClip audioCollect;
+
+    //private BoxCollider2D boxColl;
 
     private void Start()
     {
-        boxColl = GetComponent<BoxCollider2D>();
+        //boxColl = GetComponent<BoxCollider2D>();
     }
 
 
@@ -19,7 +21,7 @@ public class Bolsa_Document : MonoBehaviour
     {
         if (collision.CompareTag("Player"))
         {
-            boxColl.enabled = false;            
+            //boxColl.enabled = false;            
 
             if (normalDocument)
             {
@@ -29,6 +31,8 @@ public class Bolsa_Document : MonoBehaviour
             {
                 Bolsa_GameManager.instance.AddQtyCurrentGoldenDoc();
             }
+
+            Bolsa_AudioManager.audioManager.PlayOneShot(audioCollect, 1);
 
             Destroy(gameObject);
         }

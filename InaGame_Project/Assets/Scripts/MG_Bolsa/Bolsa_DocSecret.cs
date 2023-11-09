@@ -17,7 +17,7 @@ public class Bolsa_DocSecret : MonoBehaviour
     {
         if (collision.CompareTag("Player"))
         {
-            tilemapRen.sortingOrder = -1;
+            tilemapRen.sortingOrder = -2;
         }
     }
 

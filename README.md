@@ -3,6 +3,16 @@
 <details>
     <summary><strong><font size = "5">Versions</font></strong></summary>
 
+    0️⃣v0.0.1.10
+    ✔️Audio has been implemented
+    ✔️Menu scene done
+    ✔️Menu_Missions done
+    ✔️Interface achievements done
+    ✔️Enemy different speeds implemented
+    🚧Game balance in progress
+    🚧XP Calculus in progress
+
+
     0️⃣v0.0.1.9
     ✔️Scenario drawned: TileMap
     ♻️Death areas changed to death spikes
@@ -107,11 +117,11 @@
 
 ##### Scenario
 
-- [ ] Cenário concluído (Tilemap)
-- [ ] Colecionáveis
+- [x] Cenário concluído (Tilemap)
+- [x] Colecionáveis
   - [x] Documento implementado
   - [x] Documento dourado implementado
-  - [ ] Colocados em suas posições
+  - [x] Colocados em suas posições
 - [x] Checkpoints funcionais
   - [x] Desbloqueador do Double Jump no 2º Checkpoint
 
@@ -119,14 +129,13 @@
 
 - [x] Tela inicial com as instruções
 - [x] Game Over
-- [ ] Vitória
+- [x] Vitória
 
 ##### Audios
 
-- [ ] Música de fundo
-- [ ] SFX documento coletado
-- [ ] SFX documento dourado coletado
-- [ ] SFX player sofre dano 
-- [ ] SFX inimigo destruindo o cenário
-- [ ] Pulo do player
-- [ ] Jogo concluído
+- [x] Música de fundo
+- [x] SFX documento coletado
+- [x] SFX documento dourado coletado
+- [x] SFX player sofre dano 
+- [x] Pulo do player
+- [x] Jogo concluído

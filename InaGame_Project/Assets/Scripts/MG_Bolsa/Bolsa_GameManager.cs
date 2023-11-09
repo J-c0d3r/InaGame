@@ -8,12 +8,19 @@ public class Bolsa_GameManager : MonoBehaviour
 {
     public static Bolsa_GameManager instance;
 
+    //[SerializeField] private float speedEnemyPart1;
+    //[SerializeField] private float speedEnemyPart2;
+    //[SerializeField] private float speedEnemyPart3;
+    [SerializeField] private float[] ArraySpeedEnemy;
     [SerializeField] private int qtyTotalDoc;
     [SerializeField] private int qtyTotalGoldenDoc;
     private int qtyCurrentDoc;
     private int qtyCurrentGoldenDoc;
     private int currentSpawnPoint;
     private int qtyLifePlayer;
+    private float seconds;
+    private int minutes;
+    private bool gameRunning;
 
     [SerializeField] private GameObject inicialScreen;
     [SerializeField] private GameObject gameOverScreen;
@@ -27,6 +34,8 @@ public class Bolsa_GameManager : MonoBehaviour
     [SerializeField] private TextMeshProUGUI percBolsa_txt;
     [SerializeField] private TextMeshProUGUI xp_txt;
     [SerializeField] private TextMeshProUGUI adver_txt;
+    [SerializeField] private TextMeshProUGUI time_txt;
+    [SerializeField] private TextMeshProUGUI finalTime_txt;
 
     [SerializeField] private List<GameObject> spawnPointsList = new List<GameObject>();
     [SerializeField] private List<GameObject> lifePlayerList = new List<GameObject>();
@@ -34,6 +43,12 @@ public class Bolsa_GameManager : MonoBehaviour
     public Bolsa_Player player;
     public GameObject enemy;
     public Vector2 enemyPos;
+
+    public AudioClip audioButton;
+    public AudioClip audioPowerUpDoubleJump;
+    public AudioClip songPhase;
+    public AudioClip songGameOver;
+    public AudioClip songVictory;
 
     private void Awake()
     {
@@ -52,9 +67,29 @@ public class Bolsa_GameManager : MonoBehaviour
         qtyLifePlayer = 3;
         lifePlayerList[3].SetActive(true);
         Time.timeScale = 0;
+        gameRunning = false;
+
+        seconds = 0;
+        minutes = 0;
 
         player = GameObject.FindGameObjectWithTag("Player").GetComponent<Bolsa_Player>();
         player.transform.position = spawnPointsList[0].transform.position;
+    }
+
+    private void Update()
+    {
+        if (gameRunning)
+        {
+            seconds += Time.deltaTime;
+
+            if (seconds > 59)
+            {
+                minutes++;
+                seconds = 0;
+            }
+
+            time_txt.text = minutes.ToString("00") + ":" + seconds.ToString("00");
+        }
     }
 
     public void StartGame()
@@ -62,18 +97,26 @@ public class Bolsa_GameManager : MonoBehaviour
         inicialScreen.SetActive(false);
         Time.timeScale = 1;
         player.controlsEnabled = true;
+        gameRunning = true;
+        enemy.GetComponent<Bolsa_Enemy>().SetSpeed(ArraySpeedEnemy[0]);
+        Bolsa_AudioManager.audioManager.PlayOneShot(audioButton, 1);
+        Bolsa_AudioManager.audioManager.PlaySong(songPhase, true);
     }
 
     public void VictoryGame()
     {
+        gameRunning = false;
         if (enemy.GetComponent<Bolsa_Enemy>() != null)
             enemy.GetComponent<Bolsa_Enemy>().SetSpeed(0);
+
         player.controlsEnabled = false;
         finalScreen.SetActive(true);
         qtyDocWinScreen_txt.text = qtyCurrentDoc.ToString() + " / 20";
         qtyGoldenDocWinScreen_txt.text = qtyCurrentGoldenDoc.ToString() + " / 10";
         //percBolsa_txt.text = "Porcentagem de Bolsa: " + ((float)qtyCurrentGoldenDoc / (float)qtyTotalGoldenDoc*100.00).ToString() + "%";
         xp_txt.text = "XP: 100";
+        finalTime_txt.text = minutes.ToString("00") + ":" + seconds.ToString("00");
+
 
         finalMsgGood_txt.SetActive(false);
         finalMsgBad_txt.SetActive(false);
@@ -83,29 +126,35 @@ public class Bolsa_GameManager : MonoBehaviour
             finalMsgGood_txt.SetActive(true);
             percBolsa_txt.text = "Porcentagem de Bolsa: " + ((float)qtyCurrentGoldenDoc / (float)qtyTotalGoldenDoc * 100.00).ToString() + "%";
             adver_txt.text = "Como é bom receber uma bolsa, não é mesmo?!Aqui no Inatel também oferecemos bolsas de estudos de 20 % a 100 % para nossos alunos, venha e confira;)";
+            Bolsa_AudioManager.audioManager.PlaySong(songVictory, false);
         }
         else
         {
             finalMsgBad_txt.SetActive(true);
             percBolsa_txt.text = "Porcentagem de Bolsa: 0%";
             adver_txt.text = "Oh não :( Você não conseguiu coletar todos os documentos necessários, mas não se preocupa pois você poderá tentar novamente! Aqui no Inatel oferecemos também oferecemos bolsa de estudos, venha e confira ;)";
+            Bolsa_AudioManager.audioManager.PlaySong(songGameOver, false);
         }
     }
 
     public void RestartGame()
     {
+        Bolsa_AudioManager.audioManager.PlayOneShot(audioButton, 1);
         SceneManager.LoadScene(SceneManager.GetActiveScene().name);
     }
 
     public void BackMenu()
     {
+        Bolsa_AudioManager.audioManager.PlayOneShot(audioButton, 1);
         SceneManager.LoadScene(1);
     }
 
     public void GameOver()
     {
         //Time.timeScale = 0;
+        gameRunning = false;
         gameOverScreen.SetActive(true);
+        Bolsa_AudioManager.audioManager.PlaySong(songGameOver, false);
     }
 
 
@@ -124,12 +173,14 @@ public class Bolsa_GameManager : MonoBehaviour
     public void SpawnsController(string spawnName)
     {
         currentSpawnPoint++;
+        enemy.GetComponent<Bolsa_Enemy>().SetSpeed(ArraySpeedEnemy[currentSpawnPoint]);
 
         enemyPos = new Vector2(enemy.transform.position.x, enemy.transform.position.y);
 
         if (spawnName == "Spawn2_PUp")
         {
             player.canDoubleJump = true;
+            Bolsa_AudioManager.audioManager.PlayOneShot(audioPowerUpDoubleJump, 1);
         }
     }
 
@@ -137,6 +188,7 @@ public class Bolsa_GameManager : MonoBehaviour
     {
         player.transform.position = spawnPointsList[currentSpawnPoint].transform.position;
         enemy.transform.position = enemyPos;
+        Bolsa_AudioManager.audioManager.PlayOneShot(player.audioHit, 1);
 
         for (int i = 0; i < lifePlayerList.Count; i++)
         {
@@ -154,6 +206,8 @@ public class Bolsa_GameManager : MonoBehaviour
 
     public IEnumerator DiePlayer()
     {
+        gameRunning = false;
+        Bolsa_AudioManager.audioManager.PlayOneShot(player.audioHit, 1);
         if (enemy.GetComponent<Bolsa_Enemy>() != null)
             enemy.GetComponent<Bolsa_Enemy>().SetSpeed(0);
         player.GetComponent<Bolsa_Player>().PlayerDie();

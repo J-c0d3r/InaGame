@@ -22,6 +22,9 @@ public class Bolsa_Player : MonoBehaviour
     //[SerializeField] private CapsuleCollider2D cap2d;
     //[SerializeField] private BoxCollider2D box2d;
 
+    public AudioClip audioJump;
+    public AudioClip audioHit;
+
 
     void Start()
     {
@@ -90,11 +93,13 @@ public class Bolsa_Player : MonoBehaviour
                 rig.velocity = new Vector2(rig.velocity.x, jumpForce);
                 //rig.AddForce(Vector2.up * jumpForce, ForceMode2D.Impulse);
                 isJumping = true;
+                Bolsa_AudioManager.audioManager.PlayOneShot(audioJump, 1);
             }
             else if (isJumping && !isDoubleJumping && canDoubleJump) // second jump
             {
                 rig.velocity = new Vector2(rig.velocity.x, jumpForce);
                 isDoubleJumping = true;
+                Bolsa_AudioManager.audioManager.PlayOneShot(audioJump, 1);
             }
         }
     }
