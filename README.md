@@ -1,7 +1,16 @@
 # InaGame
+### The goal of this game is to promote Inatel.
 
+<br>
 <details>
     <summary><strong><font size = "5">Versions</font></strong></summary>
+
+    0️⃣v0.0.1.12 🏆
+    ♻️Game's name changed to "Jornada do Estudante"
+    ♻️Code refactored
+    ♻️Readme refactored
+    ✔️Game balanced
+
 
     0️⃣v0.0.1.11
     ✔️XP Calculus in progress
@@ -103,47 +112,44 @@
 
 ### ✔️Features:<br>
 
-#### Mini Game 1 - Corrida dos Documentos
+<details>
+<summary><strong><font size = "2">Mini Game 1 - Corrida dos Documentos (Document Race)</font></strong></summary>
 
-##### Player
-
-- [x] Implementar as sprites do personagem
-- [x] Implementar as mecânicas
+  ##### Player
+  - [x] Implementar as sprites do personagem
+  - [x] Implementar as mecânicas
   - [x] Andar direita e esquerda
   - [x] Pulo
   - [x] Pulo duplo
 
-##### Enemies
+  ##### Enemies
+  - [x] Inimigo seguindo player
 
-- [x] Inimigo seguindo player
+  ##### UI
+  - [x] Vida do player
+  - [x] Quantidade de documentos coletados e total
+  - [x] Quantidade de documentos dourados coletados e total
 
-##### UI
+  ##### Scenario
+  - [x] Cenário concluído (Tilemap)
+  - [x] Colecionáveis
+    - [x] Documento implementado
+    - [x] Documento dourado implementado
+    - [x] Colocados em suas posições
+  - [x] Checkpoints funcionais
+    - [x] Desbloqueador do Double Jump no 2º Checkpoint
 
-- [x] Vida do player
-- [x] Quantidade de documentos coletados e total
-- [x] Quantidade de documentos dourados coletados e total
+  ##### Screens
+  - [x] Tela inicial com as instruções
+  - [x] Game Over
+  - [x] Vitória
 
-##### Scenario
+  ##### Audios
+  - [x] Música de fundo
+  - [x] SFX documento coletado
+  - [x] SFX documento dourado coletado
+  - [x] SFX player sofre dano 
+  - [x] Pulo do player
+  - [x] Jogo concluído
 
-- [x] Cenário concluído (Tilemap)
-- [x] Colecionáveis
-  - [x] Documento implementado
-  - [x] Documento dourado implementado
-  - [x] Colocados em suas posições
-- [x] Checkpoints funcionais
-  - [x] Desbloqueador do Double Jump no 2º Checkpoint
-
-##### Screens
-
-- [x] Tela inicial com as instruções
-- [x] Game Over
-- [x] Vitória
-
-##### Audios
-
-- [x] Música de fundo
-- [x] SFX documento coletado
-- [x] SFX documento dourado coletado
-- [x] SFX player sofre dano 
-- [x] Pulo do player
-- [x] Jogo concluído
+</details>

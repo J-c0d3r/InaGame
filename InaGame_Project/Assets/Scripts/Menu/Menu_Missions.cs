@@ -52,6 +52,7 @@ public class Menu_Missions : MonoBehaviour
 
     public void ShowAchievements()
     {
+        audioSource.PlayOneShot(audio_Button);
         achievPnl.SetActive(true);
 
         UpdateAchievements();
