@@ -129,8 +129,8 @@ namespace Scholarship
             if (qtyCurrentDoc == qtyTotalDoc)
             {
                 finalMsgGood_txt.SetActive(true);
-                percBolsa_txt.text = "Porcentagem de Bolsa: " + ((float)qtyCurrentGoldenDoc / (float)qtyTotalGoldenDoc * 100.00).ToString() + "%";
-                adver_txt.text = "Como é bom receber uma bolsa, não é mesmo?! Aqui no Inatel também oferecemos bolsas de estudos de 20 % a 100% para nossos alunos, venha e confira ;)";
+                percBolsa_txt.text = "Porcentagem de Bolsa: " + Math.Round((float)qtyCurrentGoldenDoc / (float)qtyTotalGoldenDoc * 100.00, 0).ToString() + "%";
+                adver_txt.text = "Como é bom receber uma bolsa, não é mesmo?! Aqui no Inatel também oferecemos bolsas de estudos de 20% a 100% para nossos alunos, venha e confira ;)";
                 AudioManager.audioManager.PlaySong(songVictory, false);
                 PlayerPrefs.SetInt("Corrida dos Documentos", 1);
             }
