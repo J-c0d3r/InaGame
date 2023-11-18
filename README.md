@@ -6,6 +6,10 @@
 <details>
     <summary><strong><font size = "5">Versions</font></strong></summary>
 
+    0️⃣v0.0.1.14
+    ✔️Added warning text in missions screen
+
+
     0️⃣v0.0.1.13
     ✔️WebGL configured for build
     🛠️Advertisement text in final screen fixed
