@@ -1,3 +1,5 @@
+<strong>Version:</strong> 2022.3.11f1
+
 # InaGame
 
 ### The goal of this game is to promote Inatel.
